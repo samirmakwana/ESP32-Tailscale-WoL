@@ -186,7 +186,6 @@ static void start_http_server(void) {
 // ─── MicroLink Task ───────────────────────────────────────────────────────────
 static void microlink_task(void *pvParameters) {
     ESP_LOGI(TAG, "=== MicroLink Basic Connect Example ===");
-    ESP_LOGI(TAG, "MicroLink version: %s", microlink_get_version());
 
     microlink_config_t config;
     microlink_get_default_config(&config);
