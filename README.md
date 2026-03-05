@@ -1,3 +1,14 @@
+## Requirements
+- ESP-IDF v5.3
+- ESP32-S3 with PSRAM (tested on ESP32-S3-N16R8, 16MB Flash, 8MB PSRAM)
+- Tailscale account with a reusable auth key
+
+## Build
+source ~/esp/esp-idf/export.sh
+idf.py set-target esp32s3
+idf.py build
+idf.py -p /dev/tty.usbmodem1101 flash monitor
+
 ## Credits
 Based on MicroLink by CamM2325
 https://github.com/CamM2325/microlink
