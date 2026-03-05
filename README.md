@@ -12,7 +12,7 @@ idf.py -p /dev/tty.usbmodem1101 flash monitor
 ```
 
 ## Credits
-Based on MicroLink by CamM2325
-https://github.com/CamM2325/microlink
+Based on [MicroLink by CamM2325](https://github.com/CamM2325/microlink)
 Licensed under MIT License
+
 
