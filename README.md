@@ -4,12 +4,15 @@
 - Tailscale account with a reusable auth key
 
 ## Build
+```bash
 source ~/esp/esp-idf/export.sh
 idf.py set-target esp32s3
 idf.py build
 idf.py -p /dev/tty.usbmodem1101 flash monitor
+```
 
 ## Credits
 Based on MicroLink by CamM2325
 https://github.com/CamM2325/microlink
 Licensed under MIT License
+
