@@ -1,0 +1,6 @@
+version: "1.0.0"
+description: "MicroLink - Tailscale-compatible VPN client for ESP32"
+url: "https://github.com/yourusername/microlink"
+dependencies:
+  idf:
+    version: ">=5.0.0"

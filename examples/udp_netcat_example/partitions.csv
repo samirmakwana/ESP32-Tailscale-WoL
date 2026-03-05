@@ -1,0 +1,15 @@
+# MicroLink Partition Table - Supports 1024 peers with ultra-compact storage
+# For ESP32-S3 with 8MB flash
+# Ultra-compact format: 84 bytes/peer + NVS overhead (~32 bytes) = ~116 bytes/peer
+#
+# Memory layout:
+#   nvs       - 24KB  - system NVS (WiFi creds, machine key, etc.)
+#   peer_nvs  - 256KB - peer registry (1024 peers @ ~116B = 119KB + margin)
+#   phy_init  - 4KB   - PHY calibration
+#   factory   - 4MB   - application (plenty of room with 8MB flash)
+#
+# Name,   Type, SubType,  Offset,   Size
+nvs,      data, nvs,      0x9000,   0x6000,
+peer_nvs, data, nvs,      0xf000,   0x40000,
+phy_init, data, phy,      0x4f000,  0x1000,
+factory,  app,  factory,  0x50000,  0x400000,

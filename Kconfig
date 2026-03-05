@@ -1,0 +1,134 @@
+menu "MicroLink Configuration"
+
+    config MICROLINK_ENABLED
+        bool "Enable MicroLink Tailscale VPN"
+        default y
+        help
+            Enable MicroLink, a Tailscale-compatible VPN client for ESP32.
+
+    config MICROLINK_MAX_PEERS
+        int "Maximum number of peers"
+        default 16
+        range 1 64
+        help
+            Maximum number of Tailscale peers to track. Each peer uses ~200 bytes.
+
+    config MICROLINK_MAX_ENDPOINTS
+        int "Maximum endpoints per peer"
+        default 8
+        range 2 16
+        help
+            Maximum number of network endpoints per peer.
+
+    config MICROLINK_ENABLE_DERP
+        bool "Enable DERP relay support"
+        default y
+        help
+            Enable DERP (Designated Encrypted Relay for Packets) for NAT traversal.
+            Recommended for reliable connectivity behind NAT.
+
+    config MICROLINK_ENABLE_DISCO
+        bool "Enable DISCO path discovery"
+        default y
+        help
+            Enable DISCO protocol for path optimization and direct P2P connections.
+
+    config MICROLINK_ENABLE_STUN
+        bool "Enable STUN NAT discovery"
+        default y
+        help
+            Enable STUN client for discovering public IP and port mapping.
+
+    config MICROLINK_HEARTBEAT_INTERVAL_MS
+        int "Heartbeat interval (ms)"
+        default 25000
+        range 10000 60000
+        help
+            Interval between coordination server heartbeats.
+            Tailscale requires heartbeats every 25-30 seconds to maintain "online" status.
+
+    config MICROLINK_DERP_REGION
+        int "Default DERP region ID"
+        default 9
+        range 1 99
+        help
+            Default DERP region to use. Common regions:
+            1=NYC, 2=SF, 9=Dallas, 10=Seattle, 11=Singapore, 14=Sydney
+
+    config MICROLINK_DERP_DYNAMIC_DISCOVERY
+        bool "Enable dynamic DERP region discovery"
+        default n
+        help
+            When enabled, MicroLink will parse the DERPMap from the Tailscale
+            MapResponse and use available regions dynamically. This is useful
+            if your tailnet has a custom derpMap configuration that disables
+            certain regions.
+
+            When disabled (default), MicroLink uses the hardcoded DERP server
+            configured by MICROLINK_DERP_REGION. This is preferred when:
+            - Using your own self-hosted DERP server
+            - You want deterministic DERP selection
+            - Your tailnet uses default Tailscale DERP configuration
+
+    config MICROLINK_COORD_BUFFER_SIZE_KB
+        int "Coordination buffer size (KB)"
+        default 64
+        range 16 128
+        help
+            Size of the buffer used for MapResponse parsing (in KB).
+
+            For ESP32-S3 with PSRAM: Use 64KB (default) for best performance.
+            For ESP32 without PSRAM: Use 24KB or 32KB to fit in limited SRAM.
+
+            Smaller buffers may cause issues with very large tailnets (many peers).
+            16KB is the minimum for basic operation.
+
+    config MICROLINK_DEBUG_LOGGING
+        bool "Enable debug logging"
+        default n
+        help
+            Enable verbose debug logging for troubleshooting.
+
+    config MICROLINK_ZERO_COPY_WG
+        bool "Enable zero-copy WireGuard receive (high-throughput mode)"
+        default n
+        help
+            Use raw lwIP UDP PCB instead of BSD sockets for WireGuard packet
+            reception. This eliminates memory copies and reduces latency.
+
+            Enable this for high-throughput applications like video streaming
+            (30fps+). For typical IoT/sensor applications (heartbeats, commands),
+            the default BSD socket mode is simpler and sufficient.
+
+            Zero-copy mode contributed by dj-oyu (https://github.com/dj-oyu/microlink)
+
+    menu "Custom Coordination Server"
+
+        config MICROLINK_CUSTOM_COORD_SERVER
+            bool "Use custom coordination server (Headscale/Ionscale)"
+            default n
+            help
+                Enable to use a custom Tailscale-compatible coordination server
+                instead of the official Tailscale control plane. Supports:
+                - Headscale (https://github.com/juanfont/headscale)
+                - Ionscale (https://github.com/jsiebens/ionscale)
+
+        config MICROLINK_COORD_HOST
+            string "Coordination server hostname"
+            default "controlplane.tailscale.com"
+            depends on MICROLINK_CUSTOM_COORD_SERVER
+            help
+                Hostname of your custom coordination server.
+                Examples: "headscale.example.com", "ionscale.example.com"
+
+        config MICROLINK_COORD_PORT
+            int "Coordination server port"
+            default 443
+            range 1 65535
+            depends on MICROLINK_CUSTOM_COORD_SERVER
+            help
+                Port of your custom coordination server (usually 443 for HTTPS).
+
+    endmenu
+
+endmenu
