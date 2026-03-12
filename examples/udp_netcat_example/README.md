@@ -24,7 +24,7 @@ Edit `main/main.c` and update these values:
 ```c
 #define WIFI_SSID          "YOUR_WIFI_SSID"
 #define WIFI_PASSWORD      "YOUR_WIFI_PASSWORD"
-#define TAILSCALE_AUTH_KEY "tskey-auth-XXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#define TAILSCALE_AUTH_KEY "Tailscale_API_Key"
 #define TARGET_PEER_IP     "100.x.x.x"  /* Your PC's Tailscale IP */
 ```
 
@@ -153,3 +153,4 @@ This example uses:
 - **Echo mode**: Demonstrates bidirectional communication in a single session
 
 The WireGuard tunnel is established automatically through Tailscale coordination.
+
