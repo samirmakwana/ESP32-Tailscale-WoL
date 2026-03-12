@@ -16,8 +16,8 @@
 // ─── Configuration ────────────────────────────────────────────────────────────
 #define WIFI_SSID       "YOUR_WIFI_SSID"
 #define WIFI_PASSWORD   "YOUR_WIFI_PASSWORD"
-#define TS_AUTH_KEY     "tskey-auth-XXXXXXXXX"
-#define DEVICE_NAME     "TSD"
+#define TS_AUTH_KEY     "Tailscale_API_Key"
+#define DEVICE_NAME     "Your_Device_Name"
 
 // Broadcast address of your LAN — change if your subnet differs
 #define LAN_BROADCAST   "192.168.1.255"
