@@ -16,6 +16,7 @@ Edit `main/main.c` and update:
 - `WIFI_PASSWORD` — your WiFi password
 - `TS_AUTH_KEY` — your Tailscale reusable auth key
 - `LAN_BROADCAST` — your LAN broadcast address (default: 192.168.1.255)
+- Based on your ESP32-S3 model's RAM (32MB/16MB/8MB/4MB), you need to adjust the values in sdkconfig.defaults file.
 
 ## Build
 ```bash
