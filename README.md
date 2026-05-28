@@ -32,7 +32,7 @@ idf.py -p /dev/tty.usbmodem1101 flash monitor
 
 ## SSH command
 ```bash
-ssh -J <ESP32-name> username@target-machine-ip
+ssh -J <ESP32's local hostname> username@target-machine-ip
 ```
 
 ## Wake-on-LAN command
